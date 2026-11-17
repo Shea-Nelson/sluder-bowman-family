@@ -17,20 +17,17 @@
   --sans: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --max: 74rem;
   --header: 4.25rem;
+  color-scheme: light;
 }
 
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-padding-top: calc(var(--header) + 0.6rem); }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-  }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }
 
 body {
@@ -39,6 +36,7 @@ body {
   font-family: var(--sans);
   font-size: 1.05rem;
   line-height: 1.65;
+  overflow-wrap: break-word;
   background-color: var(--paper);
   background-image:
     radial-gradient(ellipse at 0% -10%, rgba(198, 161, 90, 0.2), transparent 42%),
@@ -56,7 +54,7 @@ a {
 a:hover { color: #07284b; }
 
 .skip {
-  position: absolute;
+  position: fixed;
   left: 0.75rem;
   top: 0.75rem;
   padding: 0.6rem 0.9rem;
@@ -100,6 +98,9 @@ a:hover { color: #07284b; }
   letter-spacing: 0.01em;
 }
 
+.brand:hover,
+.brand:focus-visible { color: var(--paper); }
+
 .brand span {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
@@ -120,6 +121,8 @@ a:hover { color: #07284b; }
   text-transform: uppercase;
   font-size: 0.78rem;
 }
+
+.nav-toggle:hover { background: rgba(198, 161, 90, 0.18); }
 
 .site-nav ul {
   display: flex;
@@ -148,11 +151,21 @@ a:hover { color: #07284b; }
   color: white;
 }
 
-.site-header :focus-visible { outline-color: var(--brass-pale); }
-
 :focus-visible {
   outline: 3px solid #0c4f86;
   outline-offset: 3px;
+}
+
+:is(.site-header, .hero, .site-footer) :focus-visible,
+.skip:focus-visible { outline-color: var(--brass-pale); }
+
+@media (forced-colors: active) {
+  :focus-visible,
+  :is(.site-header, .hero, .site-footer) :focus-visible,
+  .skip:focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
 }
 
 main { display: block; }
@@ -166,6 +179,7 @@ main { display: block; }
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   min-height: calc(100vh - var(--header));
+  min-height: calc(100dvh - var(--header));
   background: var(--navy-deep);
   color: var(--paper);
 }
@@ -260,8 +274,9 @@ main { display: block; }
 
 .section {
   padding: clamp(2.5rem, 6vw, 4.5rem) 0;
-  scroll-margin-top: calc(var(--header) + 0.6rem);
 }
+
+.section.tint { background: rgba(255, 255, 255, 0.35); }
 
 .section h2 {
   font-family: var(--serif);
@@ -286,6 +301,8 @@ main { display: block; }
   line-height: 1.5;
   max-width: 42rem;
 }
+
+.lede.wide { max-width: 44rem; }
 
 .prose { max-width: 44rem; }
 .prose p { margin: 0.85rem 0; }
@@ -344,6 +361,11 @@ main { display: block; }
 .note, .credit {
   color: var(--ink-soft);
   font-size: 0.92rem;
+}
+
+.note.follow {
+  max-width: 46rem;
+  margin-top: 1.2rem;
 }
 
 .tag {
@@ -445,7 +467,7 @@ button.btn:hover, .filters button:hover { background: #17365c; color: white; }
   border-top: 1px solid var(--line);
 }
 
-.stop { border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header) + 0.6rem); }
+.stop { border-bottom: 1px solid var(--line); }
 
 .stop-btn {
   width: 100%;
@@ -722,15 +744,16 @@ dialog.lightbox::backdrop { background: rgba(6, 10, 16, 0.82); }
   background: rgba(0,0,0,0.45);
 }
 
-.sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+.sr:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
 
 @media (max-width: 860px) {
@@ -857,6 +880,7 @@ dialog.lightbox::backdrop { background: rgba(6, 10, 16, 0.82); }
 }
 .person-card .who {
   display: block;
+  margin: 0;
   font-family: var(--serif);
   font-size: 1.12rem;
   font-weight: 600;
