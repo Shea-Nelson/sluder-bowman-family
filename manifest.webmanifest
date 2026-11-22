@@ -1,0 +1,36 @@
+{
+  "name": "The Sluder and Bowman Families",
+  "short_name": "Sluder",
+  "id": "/sluder-bowman-family/",
+  "start_url": "/sluder-bowman-family/",
+  "scope": "/sluder-bowman-family/",
+  "display": "standalone",
+  "background_color": "#f3ecdf",
+  "theme_color": "#10243f",
+  "icons": [
+    {
+      "src": "/sluder-bowman-family/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/sluder-bowman-family/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/sluder-bowman-family/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/sluder-bowman-family/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
